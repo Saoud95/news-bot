@@ -8,19 +8,9 @@ on:
     - cron: '0 12 * * *'
     - cron: '0 18 * * *'
   workflow_dispatch:
-    inputs:
-      mode:
-        description: 'Run mode'
-        required: true
-        default: 'politics'
-        type: choice
-        options:
-          - politics
-          - football
 
 jobs:
-  run-politics:
-    if: "github.event_name == 'workflow_dispatch' && github.event.inputs.mode == 'politics' || github.event.schedule == '0 0 * * *' || github.event.schedule == '0 6 * * *' || github.event.schedule == '0 12 * * *' || github.event.schedule == '0 18 * * *'"
+  run-bot:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -28,22 +18,16 @@ jobs:
         with:
           python-version: '3.11'
       - run: pip install anthropic requests
-      - run: python news_bot.py politics
+      - name: Run politics
+        if: github.event.schedule != '0 7 * * *'
+        run: python news_bot.py politics
         env:
           TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
           CHAT_ID: ${{ secrets.CHAT_ID }}
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
-
-  run-football:
-    if: "github.event_name == 'workflow_dispatch' && github.event.inputs.mode == 'football' || github.event.schedule == '0 7 * * *'"
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v4
-        with:
-          python-version: '3.11'
-      - run: pip install anthropic requests
-      - run: python news_bot.py football
+      - name: Run football
+        if: github.event.schedule == '0 7 * * *'
+        run: python news_bot.py football
         env:
           TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
           CHAT_ID: ${{ secrets.CHAT_ID }}
