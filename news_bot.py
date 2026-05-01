@@ -10,17 +10,12 @@ ANTHROPIC_API_KEY = os.environ.get("ANTHROPIC_API_KEY")
 
 def send_message(text):
     url = f"https://api.telegram.org/bot{TELEGRAM_TOKEN}/sendMessage"
-    resp = requests.post(url, json={
-        "chat_id": CHAT_ID,
-        "text": text,
-        "parse_mode": "Markdown"
-    })
+    resp = requests.post(url, json={"chat_id": CHAT_ID, "text": text, "parse_mode": "Markdown"})
     if resp.status_code != 200:
         requests.post(url, json={"chat_id": CHAT_ID, "text": text})
 
-def get_news_from_claude(mode):
+def get_news(mode):
     client = anthropic.Anthropic(api_key=ANTHROPIC_API_KEY)
     today = datetime.now().strftime("%Y-%m-%d")
-
     if mode == "politics":
-        prompt = f"ان
+        prompt = "اليوم " + today + ". ابحث في reuters.com و theguardian.com عن اه
