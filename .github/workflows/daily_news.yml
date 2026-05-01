@@ -35,4 +35,25 @@ jobs:
         with:
           python-version: '3.11'
       - run: pip install anthropic requests
-      -
+      - run: python news_bot.py politics
+        env:
+          TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
+          CHAT_ID: ${{ secrets.CHAT_ID }}
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+
+  run-football:
+    if: |
+      (github.event_name == 'workflow_dispatch' && github.event.inputs.mode == 'football') ||
+      (github.event_name == 'schedule' && github.event.schedule == '0 7 * * *')
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+      - run: pip install anthropic requests
+      - run: python news_bot.py football
+        env:
+          TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
+          CHAT_ID: ${{ secrets.CHAT_ID }}
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
