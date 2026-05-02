@@ -1,0 +1,846 @@
+<!DOCTYPE html>
+
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>مدير القناة الإخبارية</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Naskh+Arabic:wght@400;500;600;700&family=Cairo:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #0a0a0f;
+    --paper: #f5f2eb;
+    --cream: #ede9df;
+    --gold: #b8973a;
+    --gold-light: #d4af57;
+    --red: #8b1a1a;
+    --green: #1a4d2e;
+    --blue: #1a2e4d;
+    --muted: #6b6560;
+    --border: #ccc5b5;
+  }
+
+- { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+background: var(–paper);
+color: var(–ink);
+font-family: ‘Cairo’, ‘Noto Naskh Arabic’, serif;
+min-height: 100vh;
+background-image:
+radial-gradient(ellipse at 20% 0%, rgba(184,151,58,0.08) 0%, transparent 50%),
+radial-gradient(ellipse at 80% 100%, rgba(139,26,26,0.06) 0%, transparent 50%);
+}
+
+/* HEADER */
+header {
+border-bottom: 3px double var(–gold);
+padding: 28px 40px 20px;
+display: flex;
+align-items: center;
+justify-content: space-between;
+background: linear-gradient(180deg, rgba(255,255,255,0.6) 0%, transparent 100%);
+}
+
+.masthead {
+text-align: center;
+flex: 1;
+}
+
+.masthead-label {
+font-size: 10px;
+letter-spacing: 4px;
+color: var(–muted);
+text-transform: uppercase;
+font-family: ‘Cairo’, sans-serif;
+font-weight: 300;
+margin-bottom: 6px;
+}
+
+.masthead h1 {
+font-size: 32px;
+font-weight: 900;
+color: var(–ink);
+letter-spacing: -0.5px;
+line-height: 1;
+}
+
+.masthead h1 span {
+color: var(–gold);
+}
+
+.masthead-sub {
+font-size: 12px;
+color: var(–muted);
+margin-top: 6px;
+font-weight: 300;
+}
+
+.header-meta {
+font-size: 11px;
+color: var(–muted);
+text-align: left;
+direction: ltr;
+min-width: 120px;
+}
+
+.live-clock {
+font-size: 20px;
+font-weight: 700;
+color: var(–ink);
+font-family: ‘Cairo’, monospace;
+}
+
+.live-date {
+font-size: 10px;
+margin-top: 3px;
+color: var(–muted);
+}
+
+/* DECORATIVE RULE */
+.ornament {
+text-align: center;
+color: var(–gold);
+font-size: 18px;
+margin: 4px 0;
+letter-spacing: 8px;
+}
+
+/* MAIN GRID */
+.container {
+max-width: 1100px;
+margin: 0 auto;
+padding: 32px 24px;
+}
+
+/* SECTION CARDS */
+.section-card {
+background: white;
+border: 1px solid var(–border);
+border-radius: 2px;
+margin-bottom: 24px;
+overflow: hidden;
+box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+transition: box-shadow 0.2s;
+}
+.section-card:hover { box-shadow: 0 4px 24px rgba(0,0,0,0.1); }
+
+.card-header {
+display: flex;
+align-items: center;
+justify-content: space-between;
+padding: 16px 24px;
+border-bottom: 1px solid var(–border);
+}
+
+.card-header.politics { background: linear-gradient(135deg, #0a1628 0%, #1a2e4d 100%); color: white; }
+.card-header.football  { background: linear-gradient(135deg, #0d2b18 0%, #1a4d2e 100%); color: white; }
+.card-header.health    { background: linear-gradient(135deg, #2b0d0d 0%, #4d1a1a 100%); color: white; }
+.card-header.military  { background: linear-gradient(135deg, #1a1a2e 0%, #2d2d4d 100%); color: white; }
+
+.card-title {
+display: flex;
+align-items: center;
+gap: 12px;
+}
+
+.card-icon {
+width: 40px;
+height: 40px;
+border-radius: 50%;
+display: flex;
+align-items: center;
+justify-content: center;
+font-size: 20px;
+background: rgba(255,255,255,0.15);
+}
+
+.card-title h2 {
+font-size: 18px;
+font-weight: 700;
+}
+
+.card-title p {
+font-size: 11px;
+opacity: 0.7;
+margin-top: 2px;
+font-weight: 300;
+}
+
+.card-badge {
+background: rgba(255,255,255,0.2);
+border: 1px solid rgba(255,255,255,0.3);
+border-radius: 20px;
+padding: 4px 12px;
+font-size: 11px;
+font-weight: 600;
+}
+
+.card-body {
+padding: 20px 24px;
+}
+
+/* TOPIC TAGS */
+.topics {
+display: flex;
+flex-wrap: wrap;
+gap: 8px;
+margin-bottom: 16px;
+}
+
+.topic-tag {
+background: var(–cream);
+border: 1px solid var(–border);
+border-radius: 20px;
+padding: 4px 14px;
+font-size: 12px;
+color: var(–ink);
+font-weight: 500;
+}
+
+.topic-tag.active {
+background: var(–ink);
+color: white;
+border-color: var(–ink);
+}
+
+/* GENERATE BUTTON */
+.btn-generate {
+width: 100%;
+padding: 14px;
+border: none;
+border-radius: 2px;
+font-family: ‘Cairo’, sans-serif;
+font-size: 15px;
+font-weight: 700;
+cursor: pointer;
+transition: all 0.2s;
+display: flex;
+align-items: center;
+justify-content: center;
+gap: 10px;
+letter-spacing: 0.5px;
+}
+
+.btn-generate.politics {
+background: linear-gradient(135deg, #1a2e4d, #0a1628);
+color: white;
+}
+.btn-generate.politics:hover { background: linear-gradient(135deg, #243f6a, #1a2e4d); transform: translateY(-1px); }
+
+.btn-generate.football {
+background: linear-gradient(135deg, #1a4d2e, #0d2b18);
+color: white;
+}
+.btn-generate.football:hover { background: linear-gradient(135deg, #246640, #1a4d2e); transform: translateY(-1px); }
+
+.btn-generate.health {
+background: linear-gradient(135deg, #8b1a1a, #4d0d0d);
+color: white;
+}
+.btn-generate.health:hover { background: linear-gradient(135deg, #a82020, #8b1a1a); transform: translateY(-1px); }
+
+.btn-generate.military {
+background: linear-gradient(135deg, #2d2d4d, #1a1a2e);
+color: white;
+}
+.btn-generate.military:hover { background: linear-gradient(135deg, #3d3d66, #2d2d4d); transform: translateY(-1px); }
+
+.btn-generate:disabled {
+opacity: 0.6;
+cursor: not-allowed;
+transform: none !important;
+}
+
+/* SPINNER */
+.spinner {
+width: 18px;
+height: 18px;
+border: 2px solid rgba(255,255,255,0.3);
+border-top-color: white;
+border-radius: 50%;
+animation: spin 0.7s linear infinite;
+display: none;
+}
+.spinner.active { display: block; }
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* NEWS OUTPUT */
+.news-output {
+margin-top: 20px;
+display: none;
+}
+.news-output.visible { display: block; }
+
+.output-divider {
+border: none;
+border-top: 1px dashed var(–border);
+margin: 16px 0;
+}
+
+.output-label {
+font-size: 11px;
+color: var(–muted);
+text-transform: uppercase;
+letter-spacing: 2px;
+margin-bottom: 12px;
+font-weight: 600;
+}
+
+/* INDIVIDUAL NEWS POST */
+.news-post {
+background: var(–cream);
+border: 1px solid var(–border);
+border-radius: 2px;
+padding: 18px 20px;
+margin-bottom: 12px;
+position: relative;
+animation: slideIn 0.4s ease forwards;
+opacity: 0;
+}
+
+@keyframes slideIn {
+from { opacity: 0; transform: translateY(8px); }
+to { opacity: 1; transform: translateY(0); }
+}
+
+.news-post:nth-child(1) { animation-delay: 0.05s; }
+.news-post:nth-child(2) { animation-delay: 0.15s; }
+.news-post:nth-child(3) { animation-delay: 0.25s; }
+.news-post:nth-child(4) { animation-delay: 0.35s; }
+.news-post:nth-child(5) { animation-delay: 0.45s; }
+
+.news-post-meta {
+display: flex;
+align-items: center;
+justify-content: space-between;
+margin-bottom: 10px;
+}
+
+.news-post-source {
+font-size: 10px;
+font-weight: 700;
+letter-spacing: 2px;
+color: var(–muted);
+text-transform: uppercase;
+}
+
+.news-post-num {
+width: 24px;
+height: 24px;
+background: var(–ink);
+color: white;
+border-radius: 50%;
+font-size: 11px;
+font-weight: 700;
+display: flex;
+align-items: center;
+justify-content: center;
+}
+
+.news-post-content {
+font-size: 15px;
+line-height: 1.85;
+color: var(–ink);
+white-space: pre-wrap;
+font-family: ‘Cairo’, serif;
+font-weight: 400;
+}
+
+.news-post-actions {
+display: flex;
+gap: 8px;
+margin-top: 12px;
+justify-content: flex-end;
+}
+
+.btn-copy {
+background: var(–ink);
+color: white;
+border: none;
+border-radius: 2px;
+padding: 6px 16px;
+font-size: 12px;
+font-family: ‘Cairo’, sans-serif;
+cursor: pointer;
+transition: all 0.2s;
+font-weight: 600;
+}
+.btn-copy:hover { background: var(–gold); }
+.btn-copy.copied { background: var(–green); }
+
+/* FOOTER */
+footer {
+text-align: center;
+padding: 24px;
+border-top: 1px solid var(–border);
+color: var(–muted);
+font-size: 11px;
+margin-top: 20px;
+}
+
+/* LOADING OVERLAY */
+.loading-overlay {
+background: linear-gradient(135deg, #f5f2eb 0%, #ede9df 100%);
+border: 1px dashed var(–border);
+border-radius: 2px;
+padding: 32px;
+text-align: center;
+margin-top: 16px;
+}
+
+.loading-text {
+font-size: 14px;
+color: var(–muted);
+margin-top: 12px;
+font-weight: 500;
+}
+
+.loading-dots::after {
+content: ‘’;
+animation: dots 1.5s infinite;
+}
+@keyframes dots {
+0%   { content: ‘’; }
+33%  { content: ‘.’; }
+66%  { content: ‘..’; }
+100% { content: ‘…’; }
+}
+
+.pulse-ring {
+width: 40px;
+height: 40px;
+border: 3px solid var(–gold);
+border-top-color: transparent;
+border-radius: 50%;
+animation: spin 1s linear infinite;
+margin: 0 auto;
+}
+
+/* RESPONSIVE */
+@media (max-width: 640px) {
+header { padding: 20px 16px; flex-direction: column; gap: 12px; }
+.container { padding: 20px 12px; }
+.masthead h1 { font-size: 24px; }
+.header-meta { text-align: center; }
+}
+</style>
+
+</head>
+<body>
+
+<header>
+  <div style="min-width:120px; direction:rtl;">
+    <div style="font-size:11px; color:var(--muted); font-weight:600; letter-spacing:1px;">المصادر</div>
+    <div style="font-size:10px; color:var(--muted); margin-top:4px; line-height:1.8;">Reuters · NYT · WP · WSJ<br>Sky News · FDA · EMA · ASCO</div>
+  </div>
+
+  <div class="masthead">
+    <div class="masthead-label">نظام إدارة المحتوى الإخباري</div>
+    <h1>القناة <span>الإخبارية</span></h1>
+    <div class="masthead-sub">منشورات احترافية جاهزة للنشر على تليجرام</div>
+  </div>
+
+  <div class="header-meta" style="text-align:right; direction:rtl;">
+    <div class="live-clock" id="clock">--:--</div>
+    <div class="live-date" id="date"></div>
+  </div>
+</header>
+
+<div class="ornament">✦ &nbsp; ✦ &nbsp; ✦</div>
+
+<div class="container">
+
+  <!-- ========== POLITICS ========== -->
+
+  <div class="section-card">
+    <div class="card-header politics">
+      <div class="card-title">
+        <div class="card-icon">🌍</div>
+        <div>
+          <h2>الأخبار السياسية</h2>
+          <p>Reuters · New York Times · Washington Post · WSJ · Sky News</p>
+        </div>
+      </div>
+      <div class="card-badge">كل ساعتين</div>
+    </div>
+    <div class="card-body">
+      <div class="topics">
+        <span class="topic-tag active">🇵🇸 غزة</span>
+        <span class="topic-tag active">🇱🇧 لبنان</span>
+        <span class="topic-tag active">🇸🇩 السودان</span>
+        <span class="topic-tag active">🇮🇷🇮🇱 إيران وإسرائيل</span>
+        <span class="topic-tag active">🇺🇸 أمريكا</span>
+        <span class="topic-tag active">🌙 الخليج</span>
+      </div>
+      <button class="btn-generate politics" onclick="generateContent('politics')">
+        <span class="spinner" id="spinner-politics"></span>
+        <span id="btn-text-politics">⚡ توليد الأخبار السياسية الآن</span>
+      </button>
+      <div class="news-output" id="output-politics"></div>
+    </div>
+  </div>
+
+  <!-- ========== FOOTBALL ========== -->
+
+  <div class="section-card">
+    <div class="card-header football">
+      <div class="card-title">
+        <div class="card-icon">⚽</div>
+        <div>
+          <h2>أخبار كرة القدم</h2>
+          <p>الدوري الإماراتي · السعودي · الفيفا</p>
+        </div>
+      </div>
+      <div class="card-badge">8ص · 8م</div>
+    </div>
+    <div class="card-body">
+      <div class="topics">
+        <span class="topic-tag active">🇦🇪 الدوري الإماراتي</span>
+        <span class="topic-tag active">🇸🇦 الدوري السعودي</span>
+        <span class="topic-tag active">🏆 الفيفا</span>
+      </div>
+      <button class="btn-generate football" onclick="generateContent('football')">
+        <span class="spinner" id="spinner-football"></span>
+        <span id="btn-text-football">⚡ توليد أخبار كرة القدم الآن</span>
+      </button>
+      <div class="news-output" id="output-football"></div>
+    </div>
+  </div>
+
+  <!-- ========== MYELOMA ========== -->
+
+  <div class="section-card">
+    <div class="card-header health">
+      <div class="card-title">
+        <div class="card-icon">🔬</div>
+        <div>
+          <h2>مستجدات مرض المايلوما</h2>
+          <p>FDA · EMA · ASCO · ASH · IMF · MMRF</p>
+        </div>
+      </div>
+      <div class="card-badge">آخر الأبحاث</div>
+    </div>
+    <div class="card-body">
+      <div class="topics">
+        <span class="topic-tag active">💊 أدوية جديدة</span>
+        <span class="topic-tag active">🧬 أبحاث سريرية</span>
+        <span class="topic-tag active">✅ موافقات FDA/EMA</span>
+        <span class="topic-tag active">📊 مؤتمرات طبية</span>
+      </div>
+      <button class="btn-generate health" onclick="generateContent('health')">
+        <span class="spinner" id="spinner-health"></span>
+        <span id="btn-text-health">⚡ توليد أخبار المايلوما الآن</span>
+      </button>
+      <div class="news-output" id="output-health"></div>
+    </div>
+  </div>
+
+  <!-- ========== MILITARY ========== -->
+
+  <div class="section-card">
+    <div class="card-header military">
+      <div class="card-title">
+        <div class="card-icon">🛡️</div>
+        <div>
+          <h2>التوترات العسكرية — أمريكا والصين وتايوان</h2>
+          <p>Reuters · Pentagon · CSIS · Foreign Policy · Defense News</p>
+        </div>
+      </div>
+      <div class="card-badge">عاجل وحصري</div>
+    </div>
+    <div class="card-body">
+      <div class="topics">
+        <span class="topic-tag active">🇹🇼 تايوان</span>
+        <span class="topic-tag active">🇨🇳 الصين</span>
+        <span class="topic-tag active">🇺🇸 أمريكا</span>
+        <span class="topic-tag active">⚓ بحر الصين</span>
+        <span class="topic-tag active">✈️ تحركات عسكرية</span>
+        <span class="topic-tag active">🤝 تحالفات إندوباسيفيك</span>
+      </div>
+      <button class="btn-generate military" onclick="generateContent('military')">
+        <span class="spinner" id="spinner-military"></span>
+        <span id="btn-text-military">⚡ توليد أخبار التوترات العسكرية الآن</span>
+      </button>
+      <div class="news-output" id="output-military"></div>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  <div class="ornament" style="font-size:14px; margin-bottom:8px;">✦ &nbsp; ✦ &nbsp; ✦</div>
+  نظام إدارة المحتوى الإخباري — مدعوم بالذكاء الاصطناعي Claude
+</footer>
+
+<script>
+// ── CLOCK ──────────────────────────────────────────────
+function updateClock() {
+  const now = new Date();
+  const timeStr = now.toLocaleTimeString('ar-AE', { hour: '2-digit', minute: '2-digit' });
+  const dateStr = now.toLocaleDateString('ar-AE', { weekday: 'long', day: 'numeric', month: 'long' });
+  document.getElementById('clock').textContent = timeStr;
+  document.getElementById('date').textContent = dateStr;
+}
+updateClock();
+setInterval(updateClock, 1000);
+
+// ── PROMPTS ────────────────────────────────────────────
+const PROMPTS = {
+  politics: `أنت محرر إخباري احترافي في قناة إخبارية عربية رفيعة المستوى.
+
+مهمتك: ابحث عن أحدث 5 أخبار سياسية مهمة اليوم من مصادر موثوقة (Reuters, NYT, Washington Post, WSJ, Sky News).
+
+ركّز على هذه المواضيع بالأولوية:
+• أخبار غزة والصراع الفلسطيني الإسرائيلي
+• لبنان والأوضاع الإقليمية
+• السودان والأزمة الإنسانية
+• التوترات بين إيران وإسرائيل وأمريكا
+• اقتصاد وسياسة دول الخليج العربي
+
+لكل خبر، اكتب منشوراً مستقلاً بالتنسيق التالي بالضبط:
+---POST_START---
+[رقم الخبر]
+
+🔴 [عنوان الخبر القوي والجذاب - جملة واحدة]
+
+[نص الخبر: فقرة واحدة متكاملة من 3-4 جمل، مصاغة بأسلوب إخباري احترافي، تشمل: التفاصيل الجوهرية، السياق، والأهمية]
+
+📌 المصدر: [اسم المصدر] | [التاريخ]
+
+#[هاشتاق1] #[هاشتاق2] #[هاشتاق3]
+---POST_END---
+
+قواعد الصياغة:
+- اكتب بالعربية الفصحى الراقية
+- كل منشور مستقل تماماً وجاهز للنسخ واللصق
+- لا تضف أي مقدمات أو تعليقات خارج التنسيق المحدد
+- الأخبار يجب أن تكون حقيقية وموثوقة`,
+
+  football: `أنت محرر رياضي محترف متخصص في كرة القدم الخليجية والعالمية.
+
+مهمتك: ابحث عن أحدث 4 أخبار لكرة القدم اليوم مع التركيز على:
+• الدوري الإماراتي لكرة القدم (Pro League)
+• دوري روشن السعودي للمحترفين
+• أخبار الفيفا (FIFA) والكرة العالمية
+
+لكل خبر، اكتب منشوراً مستقلاً بالتنسيق التالي بالضبط:
+---POST_START---
+[رقم الخبر]
+
+⚽ [عنوان الخبر الرياضي الجذاب]
+
+[نص الخبر: فقرة متكاملة بأسلوب رياضي احترافي، تشمل: النتائج أو التطورات، تفاصيل المباريات أو الانتقالات، والتأثير على الترتيب أو البطولة]
+
+📌 المصدر: [اسم المصدر] | [التاريخ]
+
+#[هاشتاق1] #[هاشتاق2] #[هاشتاق3]
+---POST_END---
+
+قواعد:
+- أسلوب حماسي ومهني في آنٍ واحد
+- ركّز على الأخبار العاجلة والمباريات الأخيرة والانتقالات
+- اكتب بالعربية الفصحى
+- لا تضف أي تعليقات خارج التنسيق`,
+
+  health: `أنت طبيب وصحفي طبي متخصص في أمراض الدم وأورام النخاع.
+
+مهمتك: ابحث عن أحدث 4 مستجدات طبية تخص مرض المايلوما المتعددة (Multiple Myeloma) من مصادر: FDA, EMA, ASCO, ASH, IMF (International Myeloma Foundation), MMRF.
+
+الأولوية لـ:
+• موافقات FDA/EMA على أدوية جديدة
+• نتائج التجارب السريرية المهمة
+• توصيات المؤتمرات الطبية الكبرى
+• أبحاث اختراقية في علاج المايلوما
+
+لكل خبر، اكتب منشوراً مستقلاً بالتنسيق التالي:
+---POST_START---
+[رقم الخبر]
+
+🔬 [عنوان طبي واضح ودقيق]
+
+[نص المنشور: شرح مبسط وموثوق يوازن بين الدقة العلمية وسهولة الفهم للمريض وذويه، 3-4 جمل تشمل: اسم الدواء أو التطور، ما يعنيه للمرضى، والمرحلة التي وصل إليها]
+
+⚠️ تذكير: هذه المعلومات لأغراض التثقيف الطبي فقط. استشر طبيبك المختص.
+
+📌 المصدر: [المنظمة] | [التاريخ]
+
+#المايلوما #سرطان_النخاع #[هاشتاق3]
+---POST_END---
+
+قواعد:
+- لغة رحيمة ومهنية تراعي المرضى وذويهم
+- دقة علمية مع بساطة في الشرح
+- لا مبالغة في الوعود العلاجية`,
+
+  military: `أنت محلل عسكري واستراتيجي متخصص في شؤون منطقة المحيط الهادئ والتوترات الأمريكية الصينية.
+
+مهمتك: ابحث عن أحدث 4 أخبار وتطورات عسكرية تخص التوترات بين أمريكا والصين بشأن تايوان من مصادر موثوقة (Reuters, Pentagon statements, CSIS, Foreign Policy, Defense News, South China Morning Post, AP).
+
+الأولوية لـ:
+• التحركات العسكرية الصينية قرب تايوان (تجاوزات جوية، مناورات بحرية)
+• الردود والتصريحات الأمريكية والبنتاغون
+• صفقات الأسلحة الأمريكية لتايوان
+• التحالفات العسكرية في منطقة الإندوباسيفيك (AUKUS، Quad)
+• التوترات في بحر الصين الجنوبي والشرقي
+• أي تصعيد أو تهدئة ديبلوماسية وعسكرية
+
+لكل خبر، اكتب منشوراً مستقلاً بالتنسيق التالي بالضبط:
+---POST_START---
+[رقم الخبر]
+
+🛡️ [عنوان عسكري قوي وجذاب]
+
+[نص الخبر: فقرة متكاملة من 3-4 جمل بأسلوب تحليلي احترافي، تشمل: التطور العسكري، السياق الاستراتيجي، وتداعياته على المنطقة]
+
+📌 المصدر: [اسم المصدر] | [التاريخ]
+
+#تايوان #الصين_أمريكا #[هاشتاق3]
+---POST_END---
+
+قواعد:
+- أسلوب تحليلي استراتيجي رصين
+- اكتب بالعربية الفصحى
+- لا تضف أي تعليقات خارج التنسيق المحدد`
+};
+
+// ── PARSE POSTS ────────────────────────────────────────
+function parsePosts(text) {
+  const posts = [];
+  const regex = /---POST_START---([\s\S]*?)---POST_END---/g;
+  let match;
+  while ((match = regex.exec(text)) !== null) {
+    posts.push(match[1].trim());
+  }
+  // fallback: if no markers, split by double newline blocks
+  if (posts.length === 0) {
+    const blocks = text.split(/\n{3,}/).filter(b => b.trim().length > 50);
+    return blocks;
+  }
+  return posts;
+}
+
+// ── COPY TO CLIPBOARD ─────────────────────────────────
+function copyPost(btn, text) {
+  navigator.clipboard.writeText(text).then(() => {
+    btn.textContent = '✓ تم النسخ!';
+    btn.classList.add('copied');
+    setTimeout(() => {
+      btn.textContent = '📋 نسخ للتليجرام';
+      btn.classList.remove('copied');
+    }, 2000);
+  });
+}
+
+// ── RENDER POSTS ──────────────────────────────────────
+function renderPosts(containerId, posts) {
+  const container = document.getElementById(containerId);
+  container.classList.add('visible');
+
+  const labelMap = {
+    'output-politics': 'الأخبار السياسية',
+    'output-football': 'أخبار كرة القدم',
+    'output-health': 'مستجدات المايلوما',
+    'output-military': 'التوترات العسكرية — أمريكا والصين وتايوان'
+  };
+
+  let html = `
+    <hr class="output-divider">
+    <div class="output-label">📰 ${labelMap[containerId]} — ${posts.length} منشور جاهز للنشر</div>
+  `;
+
+  posts.forEach((post, i) => {
+    const escaped = post.replace(/'/g, "\\'").replace(/\n/g, '\\n');
+    html += `
+      <div class="news-post">
+        <div class="news-post-meta">
+          <span class="news-post-source">منشور تليجرام</span>
+          <span class="news-post-num">${i + 1}</span>
+        </div>
+        <div class="news-post-content">${post.replace(/</g, '&lt;').replace(/>/g, '&gt;')}</div>
+        <div class="news-post-actions">
+          <button class="btn-copy" onclick="copyPost(this, '${escaped}')">📋 نسخ للتليجرام</button>
+        </div>
+      </div>
+    `;
+  });
+
+  container.innerHTML = html;
+}
+
+// ── MAIN GENERATE ─────────────────────────────────────
+async function generateContent(type) {
+  const spinner = document.getElementById(`spinner-${type}`);
+  const btnText = document.getElementById(`btn-text-${type}`);
+  const output = document.getElementById(`output-${type}`);
+  const btn = spinner.closest('button');
+
+  // Loading state
+  btn.disabled = true;
+  spinner.classList.add('active');
+  btnText.textContent = 'جارٍ البحث والتحليل...';
+  output.classList.add('visible');
+  output.innerHTML = `
+    <hr class="output-divider">
+    <div class="loading-overlay">
+      <div class="pulse-ring"></div>
+      <div class="loading-text">يتم الآن البحث في المصادر الدولية وصياغة المنشورات<span class="loading-dots"></span></div>
+    </div>
+  `;
+
+  try {
+    const response = await fetch("https://api.anthropic.com/v1/messages", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        model: "claude-sonnet-4-20250514",
+        max_tokens: 1000,
+        tools: [{ type: "web_search_20250305", name: "web_search" }],
+        messages: [{ role: "user", content: PROMPTS[type] }]
+      })
+    });
+
+    const data = await response.json();
+
+    // Extract all text blocks
+    const fullText = data.content
+      .filter(b => b.type === 'text')
+      .map(b => b.text)
+      .join('\n');
+
+    const posts = parsePosts(fullText);
+
+    if (posts.length === 0) {
+      output.innerHTML = `
+        <hr class="output-divider">
+        <div class="loading-overlay">
+          <div style="font-size:24px;">⚠️</div>
+          <div class="loading-text">لم يتم العثور على منشورات. يرجى المحاولة مرة أخرى.</div>
+          <pre style="font-size:11px; color:#999; margin-top:12px; text-align:left; direction:ltr; max-height:200px; overflow:auto;">${fullText.substring(0, 500)}</pre>
+
+```
+    </div>
+  `;
+} else {
+  renderPosts(`output-${type}`, posts);
+}
+```
+
+} catch (err) {
+output.innerHTML = `<hr class="output-divider"> <div class="loading-overlay"> <div style="font-size:24px;">❌</div> <div class="loading-text">حدث خطأ: ${err.message}</div> </div>`;
+} finally {
+btn.disabled = false;
+spinner.classList.remove(‘active’);
+const labels = {
+politics: ‘⚡ توليد الأخبار السياسية الآن’,
+football: ‘⚡ توليد أخبار كرة القدم الآن’,
+health: ‘⚡ توليد أخبار المايلوما الآن’,
+military: ‘⚡ توليد أخبار التوترات العسكرية الآن’
+};
+btnText.textContent = labels[type];
+}
+}
+</script>
+
+</body>
+</html>
