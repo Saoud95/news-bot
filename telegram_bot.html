@@ -704,6 +704,26 @@ const PROMPTS = {
 - لا تضف أي تعليقات خارج التنسيق المحدد`
 };
 
+// ── TELEGRAM CONFIG ───────────────────────────────────
+const TELEGRAM_TOKEN = '7992877414:AAEEZAcnhnMa_hLSDYCHKccMTKgx9MOi0qg';
+const TELEGRAM_CHAT_ID = '1913400799';
+
+async function sendToTelegram(text) {
+  try {
+    await fetch(`https://api.telegram.org/bot${TELEGRAM_TOKEN}/sendMessage`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        chat_id: TELEGRAM_CHAT_ID,
+        text: text,
+        parse_mode: 'HTML'
+      })
+    });
+  } catch (e) {
+    console.error('Telegram error:', e);
+  }
+}
+
 // ── PARSE POSTS ────────────────────────────────────────
 function parsePosts(text) {
   const posts = [];
@@ -718,6 +738,22 @@ function parsePosts(text) {
     return blocks;
   }
   return posts;
+}
+
+// ── SEND TO TELEGRAM ──────────────────────────────────
+async function sendToTelegramPost(btn, text) {
+  const original = btn.textContent;
+  btn.textContent = '⏳ جارٍ الإرسال...';
+  btn.disabled = true;
+  const clean = text.replace(/\\n/g, '\n').replace(/\\'/g, "'");
+  await sendToTelegram(clean);
+  btn.textContent = '✅ تم الإرسال!';
+  btn.style.background = '#1a4d2e';
+  setTimeout(() => {
+    btn.textContent = original;
+    btn.style.background = '#0088cc';
+    btn.disabled = false;
+  }, 3000);
 }
 
 // ── COPY TO CLIPBOARD ─────────────────────────────────
@@ -759,7 +795,8 @@ function renderPosts(containerId, posts) {
         </div>
         <div class="news-post-content">${post.replace(/</g, '&lt;').replace(/>/g, '&gt;')}</div>
         <div class="news-post-actions">
-          <button class="btn-copy" onclick="copyPost(this, '${escaped}')">📋 نسخ للتليجرام</button>
+          <button class="btn-copy" onclick="copyPost(this, '${escaped}')">📋 نسخ</button>
+          <button class="btn-copy" style="background:#0088cc;" onclick="sendToTelegramPost(this, '${escaped}')">✈️ إرسال لتليجرام</button>
         </div>
       </div>
     `;
